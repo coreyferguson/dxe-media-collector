@@ -24,6 +24,7 @@ export default function MediaListView({ articles }) {
       for (let i=0; i<articles.length; i++) {
         if (articles[i].url === selectedArticleUrl) return articles[i];
       }
+      return undefined;
     });
     // copy articles to clipboard
     if (!navigator || !navigator.permissions || !navigator.permissions.query) return;
