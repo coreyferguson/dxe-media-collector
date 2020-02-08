@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types';
 
 export default function MediaListView({ articles }) {
-  console.log('articles! :', articles);
   const [ selectedArticleUrls, setSelectedArticleUrls ] = React.useState([]);
   const handleChange = e => {
     const url = e.target.id;
