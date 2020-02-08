@@ -1,1 +1,1 @@
-export { default } from './mediaService';
+export { default } from './mediaServiceContext';

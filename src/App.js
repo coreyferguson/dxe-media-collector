@@ -1,18 +1,18 @@
 import React from 'react';
 import './App.css';
-import mediaService from './mediaService';
+import getMediaService from './mediaService';
+import MediaList from './MediaList';
 
 function App() {
+  const [articles, setArticles] = React.useState([]);
   React.useEffect(() => {
-    console.log('here');
-    mediaService.fetchAll().then(res => {
-      console.log('fetchAll complete');
-    }).catch(err => {
-      console.error('ERROR', err);
+    getMediaService().fetchAll().then(res => setArticles(res.articles)).catch(err => {
+      console.log('err :', err);
     })
   }, []);
   return (
     <div className="App">
+      <MediaList articles={articles} />
     </div>
   );
 }

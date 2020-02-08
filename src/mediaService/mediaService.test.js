@@ -1,4 +1,4 @@
-import { MediaService } from './mediaService';
+import { MediaService } from './mediaServiceNewsApiStrategy';
 import config from '../config/config-test';
 import sinon from 'sinon';
 import responseSuccess from './mock/responseSuccess.json';
