@@ -11,7 +11,7 @@ export class MediaService {
     const url = this._config.media.newsapi.url;
     const apiKey = this._config.media.newsapi.apiKey;
     const q = '%22direct%20action%20everywhere%22';
-    const urlWithParams = `${url}?q=${q}&apiKey=${apiKey}&sortBy=publishedAt&language=en`;
+    const urlWithParams = `${url}?q=${q}&apiKey=${apiKey}&sortBy=publishedAt&language=en&pageSize=100`;
     return this._fetch(urlWithParams).then(res => res.json());
   }
 }

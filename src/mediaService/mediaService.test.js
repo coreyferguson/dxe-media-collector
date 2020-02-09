@@ -9,7 +9,10 @@ describe('mediaService', () => {
       const fetch = mockFetch(responseSuccess);
       const mediaService = new MediaService({ config, fetch });
       const res = await mediaService.fetchAll();
-      expect(fetch.calledWith('https://newsapi.org?q=direct+action+everywhere&apiKey=0123456789')).toBe(true);
+      const expectedUrl = 'https://newsapi.org'
+        + '?q=%22direct%20action%20everywhere%22'
+        + '&apiKey=0123456789&sortBy=publishedAt&language=en&pageSize=100';
+      expect(fetch.getCall(0).args[0]).toBe(expectedUrl);
       expect(res).toEqual(responseSuccess);
     });
 
