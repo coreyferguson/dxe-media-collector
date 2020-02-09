@@ -1,17 +1,49 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 
-export default function MediaListView({ articles }) {
-  const [ selectedArticleUrls, setSelectedArticleUrls ] = React.useState([]);
-  const handleChange = e => {
-    const url = e.target.id;
-    if (!e.target.checked) {
-      setSelectedArticleUrls(selectedArticleUrls.filter(article => article !== url));
-    } else {
-      setSelectedArticleUrls([...selectedArticleUrls, url]);
-    }
+export function getDefaultState(articles) {
+  return {
+    articles: !articles ? {} : articles.reduce((agg, article) => {
+      agg[article.url] = article;
+      return agg;
+    }, {}),
+    selectedArticles: {}
   };
-  const listItems = articles.map(article =>
+}
+
+export function reducer(state, action) {
+  if (!state) return getDefaultState();
+  switch (action.type) {
+    case 'SELECT_ARTICLE':
+      return {
+        ...state,
+        selectedArticles: {
+          ...state.selectedArticles,
+          [action.articleUrl]: true
+        }
+      };
+    case 'DESELECT_ARTICLE':
+      return {
+        ...state,
+        selectedArticles: {
+          ...state.selectedArticles,
+          [action.articleUrl]: false
+        }
+      };
+    default:
+      return state;
+  }
+};
+
+export default function MediaListView({ articles }) {
+  const [state, dispatch] = React.useReducer(reducer, getDefaultState(articles));
+  console.log('state.selectedArticles :', state.selectedArticles);
+  const handleChange = e => {
+    const articleUrl = e.target.id;
+    if (!e.target.checked) dispatch({ type: 'DESELECT_ARTICLE', articleUrl });
+    else dispatch({ type: 'SELECT_ARTICLE', articleUrl });
+  };
+  const listItems = Object.values(state.articles).map(article =>
     <li key={article.url}>
       <input id={article.url} type='checkbox' onChange={handleChange} />
       <a href={article.url} target='_blank' rel="noopener noreferrer">{article.title}</a>
@@ -19,13 +51,11 @@ export default function MediaListView({ articles }) {
   );
   const handleSubmit = e => {
     e.preventDefault();
-    // find relevant articles
-    const selectedArticles = selectedArticleUrls.map(selectedArticleUrl => {
-      for (let i=0; i<articles.length; i++) {
-        if (articles[i].url === selectedArticleUrl) return articles[i];
-      }
-      return undefined;
-    });
+    // fetch a list of selected articles
+    const selectedArticles =
+      Object.keys(state.selectedArticles)
+      .filter(articleUrl => state.selectedArticles[articleUrl])
+      .map(selectedArticleUrl => state.articles[selectedArticleUrl]);
     // copy articles to clipboard
     if (!navigator || !navigator.permissions || !navigator.permissions.query) return;
     const promise = navigator.permissions.query({ name: 'clipboard-write' })
