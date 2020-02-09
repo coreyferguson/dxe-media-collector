@@ -37,7 +37,6 @@ export function reducer(state, action) {
 
 export default function MediaListView({ articles }) {
   const [state, dispatch] = React.useReducer(reducer, getDefaultState(articles));
-  console.log('state.selectedArticles :', state.selectedArticles);
   const handleChange = e => {
     const articleUrl = e.target.id;
     if (!e.target.checked) dispatch({ type: 'DESELECT_ARTICLE', articleUrl });
