@@ -53,8 +53,8 @@ export default function MediaListView({ articles }) {
     // fetch a list of selected articles
     const selectedArticles =
       Object.keys(state.selectedArticles)
-      .filter(articleUrl => state.selectedArticles[articleUrl])
-      .map(selectedArticleUrl => state.articles[selectedArticleUrl]);
+      .filter(url => state.selectedArticles[url])
+      .map(url => state.articles[url]);
     // copy articles to clipboard
     if (!navigator || !navigator.permissions || !navigator.permissions.query) return;
     const promise = navigator.permissions.query({ name: 'clipboard-write' })
