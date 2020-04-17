@@ -1,0 +1,72 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #212121;
+  color: #F2F2F2;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.2px;
+  font-size: 24px;
+}
+
+button {
+  min-width: 200px;
+  padding: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 0;
+  border-radius: 10px 5px 10px 5px;
+  color: #F2F2F2;
+  font-size: 100%;
+  background-color: #A66226;
+}
+button.primary {
+  background-color: #A66226;
+}
+button.secondary {
+  background-color: #5227DB;
+}
+
+h1 {
+  // desktop
+  @media (min-width: 800px) {
+    font-size: 72px;
+  }
+
+  // mobile
+  @media (max-width: 799px) {
+    font-size: 48px;
+  }
+}
+
+h2 {
+  // desktop
+  @media (min-width: 800px) {
+    font-size: 36px;
+  }
+
+  // mobile
+  @media (max-width: 799px) {
+    font-size: 24px;
+  }
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+  color: $foreground-2;
+  margin: 0;
+}
+
+a {
+  color: #fa0;
+}
+
+input[type=checkbox] {
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  transform: scale(2);
+  padding: 10px;
+}

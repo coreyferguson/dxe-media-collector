@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import MediaListStyle from './MediaListStyle';
 
 export function getDefaultState(articles) {
   return {
@@ -79,20 +80,24 @@ export default function MediaListView({ articles }) {
     );
   });
   return (
-    <div>
+    <MediaListStyle>
       <h1>Articles</h1>
       <form onSubmit={handleSubmit}>
         <button type='submit'>Copy articles to clipboard</button>
         <table>
-          <tr>
-            <th>&nbsp;</th>
-            <th>Date</th>
-            <th>Title</th>
-          </tr>
-          {listItems}
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th>Date</th>
+              <th>Title</th>
+            </tr>
+          </thead>
+          <tbody>
+            {listItems}
+          </tbody>
         </table>
       </form>
-    </div>
+    </MediaListStyle>
   );
 }
 

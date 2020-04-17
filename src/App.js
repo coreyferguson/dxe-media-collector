@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import getMediaService from './mediaService';
 import MediaList from './MediaList';
+import AppStyle from './AppStyle';
 
 function App() {
   const [ loading, setLoading ] = React.useState(false);
@@ -23,13 +24,13 @@ function App() {
     });
   };
   return (
-    <div className="App">
+    <AppStyle className="App">
       <form onSubmit={handleSearch}>
         <input id='q' value={q} type='text' name='news-api-query' onChange={e => setQ(e.target.value)}></input>
-        <button type='submit'>Search</button>
+        <button type='submit'>search</button>
       </form>
       {articles && <MediaList articles={articles} />}
-    </div>
+    </AppStyle>
   );
 }
 
