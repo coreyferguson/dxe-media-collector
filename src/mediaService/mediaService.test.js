@@ -8,7 +8,7 @@ describe('mediaService', () => {
     it('successful response', async () => {
       const fetch = mockFetch(responseSuccess);
       const mediaService = new MediaService({ config, fetch });
-      const res = await mediaService.fetchAll();
+      const res = await mediaService.fetchAll('"direct action everywhere"');
       const expectedUrl = 'https://newsapi.org'
         + '?q=%22direct%20action%20everywhere%22'
         + '&apiKey=0123456789&sortBy=publishedAt&language=en&pageSize=100';

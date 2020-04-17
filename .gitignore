@@ -24,3 +24,5 @@ yarn-error.log*
 
 # Serverless directories
 .serverless
+
+TODO.md

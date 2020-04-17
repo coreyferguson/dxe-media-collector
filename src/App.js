@@ -4,11 +4,16 @@ import getMediaService from './mediaService';
 import MediaList from './MediaList';
 
 function App() {
-  const [ loading, setLoading ] = React.useState(true);
-  const [ articles, setArticles ] = React.useState([]);
+  const [ loading, setLoading ] = React.useState(false);
+  const [ articles, setArticles ] = React.useState();
   const [ error, setError ] = React.useState();
-  React.useEffect(() => {
-    getMediaService().fetchAll().then(res => {
+  const [ q, setQ ] = React.useState("");
+  if (loading) return <h1>Loading...</h1>;
+  if (error) return <h1>{error.message}</h1>
+  const handleSearch = e => {
+    e.preventDefault();
+    setLoading(true);
+    getMediaService().fetchAll(q).then(res => {
       setArticles(res.articles);
       setLoading(false);
     }).catch(err => {
@@ -16,12 +21,14 @@ function App() {
       setLoading(false);
       setError(err);
     });
-  }, []);
-  if (loading) return <h1>Loading...</h1>;
-  if (error) return <h1>{error.message}</h1>
+  };
   return (
     <div className="App">
-      <MediaList articles={articles} />
+      <form onSubmit={handleSearch}>
+        <input id='q' value={q} type='text' name='news-api-query' onChange={e => setQ(e.target.value)}></input>
+        <button type='submit'>Search</button>
+      </form>
+      {articles && <MediaList articles={articles} />}
     </div>
   );
 }
