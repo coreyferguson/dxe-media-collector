@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 export function getDefaultState(articles) {
   return {
@@ -42,12 +43,6 @@ export default function MediaListView({ articles }) {
     if (!e.target.checked) dispatch({ type: 'DESELECT_ARTICLE', articleUrl });
     else dispatch({ type: 'SELECT_ARTICLE', articleUrl });
   };
-  const listItems = Object.values(state.articles).map(article =>
-    <li key={article.url}>
-      <input id={article.url} type='checkbox' onChange={handleChange} />
-      <a href={article.url} target='_blank' rel="noopener noreferrer">{article.title}</a>
-    </li>
-  );
   const handleSubmit = e => {
     e.preventDefault();
     // fetch a list of selected articles
@@ -72,12 +67,30 @@ export default function MediaListView({ articles }) {
       }
     });
   };
+  const listItems = Object.values(state.articles).map(article => {
+    const date = moment(article.publishedAt);
+    const publishedAtString = date.format('YYYY-MM-DD, dddd');
+    return (
+      <tr key={article.url}>
+        <td><input id={article.url} type='checkbox' onChange={handleChange} /></td>
+        <td>{publishedAtString}</td>
+        <td><a href={article.url} target='_blank' rel="noopener noreferrer">{article.title}</a></td>
+      </tr>
+    );
+  });
   return (
     <div>
       <h1>Articles</h1>
       <form onSubmit={handleSubmit}>
         <button type='submit'>Copy articles to clipboard</button>
-        <ul>{listItems}</ul>
+        <table>
+          <tr>
+            <th>&nbsp;</th>
+            <th>Date</th>
+            <th>Title</th>
+          </tr>
+          {listItems}
+        </table>
       </form>
     </div>
   );
